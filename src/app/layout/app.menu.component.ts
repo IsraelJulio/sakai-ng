@@ -56,7 +56,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Cupons',
                         icon: PrimeIcons.PERCENTAGE,
-                        routerLink: ['/cupons'],
+                        routerLink: ['/coupon'],
                         routerLinkActiveOptions: {
                             exact: true,
                         },
@@ -64,7 +64,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Categorias',
                         icon: PrimeIcons.SLACK,
-                        routerLink: ['/categorias'],
+                        routerLink: ['/category'],
                         routerLinkActiveOptions: {
                             exact: true,
                         },

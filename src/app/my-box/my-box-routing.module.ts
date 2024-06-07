@@ -7,7 +7,6 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            // { path: '', component: MyOrdersComponent },
             {
                 path: '',
 
@@ -16,7 +15,30 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
                         (m) => m.MyOrdersModule
                     ),
             },
-            // { path: '**', redirectTo: '/notfound' },
+            {
+                path: 'product',
+
+                loadChildren: () =>
+                    import('./product/product.module').then(
+                        (m) => m.ProductModule
+                    ),
+            },
+            {
+                path: 'coupon',
+
+                loadChildren: () =>
+                    import('./coupon/coupon.module').then(
+                        (m) => m.CouponModule
+                    ),
+            },
+            {
+                path: 'category',
+
+                loadChildren: () =>
+                    import('./category/category.module').then(
+                        (m) => m.CategoryModule
+                    ),
+            },
         ]),
     ],
     exports: [RouterModule],

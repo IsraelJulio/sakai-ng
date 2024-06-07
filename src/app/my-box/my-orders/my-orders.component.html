@@ -1,10 +1,9 @@
 <div class="grid">
     <div class="col-12 md:col-4 fill-height">
-        <p-panel header="" [toggleable]="false" class="panel">
-            <ng-template pTemplate="header">
-                <span
-                    class="text-primary font-semibold text-xl d-block w-100 p-100"
-                    >Em análise</span
+        <p-panel header="" [toggleable]="false" class="panel" id="analise">
+            <ng-template pTemplate="header" id="analise">
+                <span class="font-semibold text-xl d-block w-100 p-100"
+                    >Em Analise</span
                 >
             </ng-template>
             <div class="panel-content">
@@ -16,11 +15,10 @@
         </p-panel>
     </div>
     <div class="col-12 md:col-4">
-        <p-panel header="" [toggleable]="false" class="panel">
+        <p-panel header="" [toggleable]="false" class="panel" id="producao">
             <ng-template pTemplate="header">
-                <span
-                    class="text-primary font-semibold text-xl d-block w-100 p-100"
-                    >Em análise</span
+                <span class="font-semibold text-xl d-block w-100 p-100"
+                    >Em Produção</span
                 >
             </ng-template>
             <div class="panel-content">
@@ -32,12 +30,11 @@
         </p-panel>
     </div>
     <div class="col-12 md:col-4">
-        <p-panel header="" [toggleable]="false" class="panel">
+        <p-panel header="" [toggleable]="false" class="panel" id="pronto">
             <ng-template pTemplate="header">
-                <span
-                    class="text-primary font-semibold text-xl d-block w-100 p-100"
-                    >Em análise</span
-                >
+                <span class="font-semibold text-xl d-block w-100"
+                    >Pronto para entrega</span
+                >&nbsp;<i class="pi pi-check-circle"></i>
             </ng-template>
             <div class="panel-content">
                 <div class="content">

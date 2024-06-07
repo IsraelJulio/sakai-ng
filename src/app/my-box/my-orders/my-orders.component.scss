@@ -5,6 +5,43 @@
     align-content: stretch;
     justify-content: center;
     flex-direction: column;
-
-
 }
+
+:host ::ng-deep #analise .p-panel .p-panel-header  {
+    background-color: #e5712d;
+    color:aliceblue;
+    font-size: large;
+    font-weight: bold;
+  }
+
+  :host ::ng-deep #analise .p-panel.p-component  .p-toggleable-content > .p-panel-content{
+    background-color: #eb8042;
+    color:aliceblue;
+    font-size: large;
+  }
+
+  :host ::ng-deep #producao .p-panel .p-panel-header  {
+    background-color: #e69a2d;
+    color:aliceblue;
+    font-size: large;
+    font-weight: bold;
+  }
+
+  :host ::ng-deep #producao .p-panel.p-component  .p-toggleable-content > .p-panel-content{
+    background-color: #ffac32;
+    color:aliceblue;
+    font-size: large;
+  }
+
+  :host ::ng-deep #pronto .p-panel .p-panel-header  {
+    background-color: #519d48;
+    color:aliceblue;
+    font-size: large;
+    font-weight: bold;
+  }
+
+  :host ::ng-deep #pronto .p-panel.p-component  .p-toggleable-content > .p-panel-content{
+    background-color: #54ab39;
+    color:aliceblue;
+    font-size: large;
+  }
