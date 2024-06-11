@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+    FormControl,
+    FormGroup,
+    UntypedFormBuilder,
+    Validators,
+} from '@angular/forms';
 import { Category } from 'src/app/domain/category';
 import { Product } from 'src/app/domain/product';
 import { ProductService } from '../service/product.service';
@@ -16,15 +21,17 @@ import { Table } from 'primeng/table';
 export class ProductComponent implements OnInit {
     productDialog: boolean = false;
     uploadedFiles: any[] = [];
+    categories: Category[] = [];
     deleteProductDialog: boolean = false;
-
+    productForm: FormGroup | undefined;
     deleteProductsDialog: boolean = false;
-
+    checked: boolean = false;
     products: Product[] = [];
 
     product: Product = {};
 
     selectedProducts: Product[] = [];
+    Apiproducts: Product[] = [];
 
     submitted: boolean = false;
 
@@ -36,31 +43,49 @@ export class ProductComponent implements OnInit {
 
     constructor(
         private productService: ProductService,
-        private messageService: MessageService
-    ) {}
-
-    ngOnInit() {
-        this.productService
-            .getProducts()
-            .then((data) => (this.products = data));
+        private messageService: MessageService,
+        private categoryService: CategoryService,
+        private fb: UntypedFormBuilder
+    ) {
+        this.buildForm();
+    }
+    async ngOnInit() {
+        this.products = await lastValueFrom(this.productService.get());
+        this.categories = await lastValueFrom(
+            this.categoryService.getActives()
+        );
 
         this.cols = [
             { field: 'product', header: 'Product' },
             { field: 'price', header: 'Price' },
             { field: 'category', header: 'Category' },
             { field: 'rating', header: 'Reviews' },
-            { field: 'status', header: 'Status' },
-        ];
-
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' },
+            { field: 'isActive', header: 'Status' },
         ];
     }
-
+    reload() {
+        this.productService
+            .get()
+            .subscribe((response) => (this.products = response));
+        this.uploadedFiles = [];
+    }
+    buildForm() {
+        this.productForm = this.fb.group({
+            name: ['', Validators.required],
+            id: [0],
+            description: ['', Validators.required],
+            price: [null, Validators.required],
+            isActive: [false],
+            image: [''],
+            categoryId: [null, Validators.required],
+            status: [],
+            imageBase64: [],
+        });
+    }
     openNew() {
+        this.uploadedFiles = [];
         this.product = {};
+        this.buildForm();
         this.submitted = false;
         this.productDialog = true;
     }
@@ -70,7 +95,9 @@ export class ProductComponent implements OnInit {
     }
 
     editProduct(product: Product) {
+        this.uploadedFiles = [];
         this.product = { ...product };
+        this.productForm.patchValue(this.product);
         this.productDialog = true;
     }
 
@@ -81,29 +108,68 @@ export class ProductComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteProductsDialog = false;
-        this.products = this.products.filter(
-            (val) => !this.selectedProducts.includes(val)
+        this.products = this.products.filter((val) =>
+            this.selectedProducts.includes(val)
         );
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Products Deleted',
-            life: 3000,
-        });
-        this.selectedProducts = [];
+        const productIds: string[] = this.products.map((product) => product.id);
+        this.productService
+            .deleteList(productIds)
+            .subscribe({
+                next: async (response: Product[]) => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Produtos deletados com sucesso!',
+                        life: 3000,
+                    });
+                    console.log(response, 'response');
+                    this.products = response;
+                    this.productDialog = false;
+                },
+                error: (err: any) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Erro!',
+                        detail: err.error,
+                        life: 3000,
+                    });
+                },
+            })
+            .add(() => {
+                this.deleteProductDialog = false;
+            });
+
+        this.product = {};
     }
 
-    confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(
-            (val) => val.id !== this.product.id
-        );
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Product Deleted',
-            life: 3000,
-        });
+    confirmDelete(selectedProduct: Product) {
+        this.productService
+            .delete(selectedProduct.id)
+            .subscribe({
+                next: async (response: Product[]) => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Produto deletado com sucesso!',
+                        life: 3000,
+                    });
+                    console.log(response, 'response');
+                    this.products = response;
+                    this.productDialog = false;
+                },
+                error: (err: any) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Erro!',
+                        detail: err.error,
+                        life: 3000,
+                    });
+                },
+            })
+            .add(() => {
+                this.deleteProductDialog = false;
+            });
+
         this.product = {};
     }
 
@@ -114,41 +180,57 @@ export class ProductComponent implements OnInit {
 
     saveProduct() {
         this.submitted = true;
-
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.status = this.product.status
-                    ? this.product.status
-                    : this.product.status;
-                this.products[this.findIndexById(this.product.id)] =
-                    this.product;
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Updated',
-                    life: 3000,
-                });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.status = this.product.status
-                    ? this.product.status
-                    : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Created',
-                    life: 3000,
-                });
-            }
-
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
+        let request = this.productForm.getRawValue();
+        console.log(request);
+        if (request.id != 0) {
+            this.productService
+                .put(request)
+                .subscribe({
+                    next: async (response: Product[]) => {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Product Atualizado',
+                            life: 3000,
+                        });
+                        console.log(response, 'response');
+                        this.products = response;
+                        this.productDialog = false;
+                    },
+                    error: (err: any) => {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Erro!',
+                            detail: err.error,
+                            life: 3000,
+                        });
+                    },
+                })
+                .add(() => {});
+        } else {
+            this.productService
+                .post(request)
+                .subscribe({
+                    next: (response: Product[]) => {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Produto Criado',
+                            life: 3000,
+                        });
+                        this.products = response;
+                        this.productDialog = false;
+                    },
+                    error: (err: any) => {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Erro!',
+                            detail: err.error,
+                            life: 3000,
+                        });
+                    },
+                })
+                .add(() => {});
         }
     }
 
@@ -180,15 +262,28 @@ export class ProductComponent implements OnInit {
             'contains'
         );
     }
-    onUpload(event: any) {
+    async onUpload(event: any) {
         for (const file of event.files) {
             this.uploadedFiles.push(file);
+            const base64Image = await this.convertFileToBase64(file);
+            this.productForm.patchValue({
+                imageBase64: base64Image,
+            });
         }
 
         this.messageService.add({
             severity: 'info',
             summary: 'Success',
             detail: 'File Uploaded',
+        });
+    }
+
+    convertFileToBase64(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
         });
     }
 }

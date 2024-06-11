@@ -20,6 +20,7 @@ import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { CategoryComponent } from './category.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 @NgModule({
     declarations: [CategoryComponent],
     imports: [
@@ -40,6 +41,7 @@ import { CategoryComponent } from './category.component';
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
+        InputSwitchModule,
     ],
     providers: [MessageService, DialogService, ConfirmationService],
 })

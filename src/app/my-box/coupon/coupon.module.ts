@@ -20,6 +20,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { CouponComponent } from './coupon.component';
 import { CouponRoutingModule } from './coupon-routing.module';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
     declarations: [CouponComponent],
@@ -41,6 +42,7 @@ import { CouponRoutingModule } from './coupon-routing.module';
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
+        InputSwitchModule,
     ],
     providers: [MessageService, DialogService, ConfirmationService],
 })

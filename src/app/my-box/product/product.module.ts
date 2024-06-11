@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
     declarations: [ProductComponent],
@@ -39,6 +40,7 @@ import { ButtonModule } from 'primeng/button';
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
+        InputSwitchModule,
     ],
     providers: [MessageService, DialogService, ConfirmationService],
 })
