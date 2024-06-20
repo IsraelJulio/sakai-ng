@@ -1,0 +1,272 @@
+<p-toast></p-toast>
+<div class="col-12">
+    <div class="card">
+        <div
+            class="flex flex-wrap gap-2"
+            style="justify-content: space-between"
+        >
+            <h5>Criar pedido</h5>
+            <div class="flex flex-wrap gap-2 align-items-end">
+                <p-badge
+                    [value]="total | currency : 'BRL'"
+                    size="xlarge"
+                    [severity]="colorclass"
+                ></p-badge>
+            </div>
+        </div>
+        <form
+            [formGroup]="orderForm"
+            autocomplete="off"
+            (ngSubmit)="onSubmit()"
+        >
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="firstname2">Items</label>
+                    <p-multiSelect
+                        [options]="products"
+                        formControlName="products"
+                        placeholder="Selecione os produtos"
+                        optionLabel="name"
+                        class="multiselect-custom"
+                        display="chip"
+                        (onChange)="totalProducts($event.value)"
+                    >
+                        <ng-template let-product pTemplate="item">
+                            <div class="flex align-items-center">
+                                <img
+                                    [src]="product.imageBase64"
+                                    [alt]="product.image"
+                                    width="180"
+                                    [class]="'flag'"
+                                    style="width: 61px; height: auto"
+                                />
+
+                                <span class="ml-2">{{ product.name }} | </span>
+                                <span class="ml-2">
+                                    {{ product.price | currency : "BRL" }}
+                                </span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="lastname2">Cupons</label>
+                    <p-dropdown
+                        [options]="coupons"
+                        formControlName="coupon"
+                        placeholder="Selecione o cupom"
+                        optionLabel="name"
+                        [filter]="true"
+                        showClear="true"
+                        (onClear)="deletCoupon()"
+                        filterBy="name"
+                        class="multiselect-custom"
+                        display="chip"
+                        (onChange)="totalCoupon($event.value)"
+                    >
+                        <ng-template
+                            let-coupon
+                            pTemplate="item"
+                            style="display: flex; align-items: center"
+                        >
+                            <span class="">{{ coupon.name }} | </span>
+
+                            <i
+                                class="pi pi-fw pi-money-bill mr-2 text-2xl"
+                                *ngIf="coupon.couponType == 0"
+                            ></i>
+                            <i
+                                class="pi pi-fw pi-percentage mr-2"
+                                *ngIf="coupon.couponType == 1"
+                            ></i>
+
+                            {{
+                                coupon.couponType == 0
+                                    ? (coupon.value | currency : "BRL") + " | "
+                                    : coupon.value + " | "
+                            }}
+
+                            {{ coupon.cod }}
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="col-12">
+                    <p-autoComplete
+                        formcontrolName="phoneNumber"
+                        [suggestions]="filteredClients"
+                        (completeMethod)="filterClient($event)"
+                        (onSelect)="onSelectNumber($event.value)"
+                        (onBlur)="addPhone($event.target.value)"
+                        field="phoneNumber"
+                        [dropdown]="true"
+                        placeholder="Celular"
+                        ><ng-template let-client pTemplate="item">
+                            <i class="pi pi-fw pi-user-plus mr-2 text-2xl"></i>
+                            {{ client.phoneNumber + " | " }}
+                            {{ client.name.toUpperCase() }}
+                        </ng-template>
+                        <ng-template pTemplate="selectedItem">
+                            <span class="'product-badge status-instock'">{{
+                                client.phoneNumber
+                            }}</span>
+                        </ng-template>
+                    </p-autoComplete>
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-user"></i>
+                        </p-inputGroupAddon>
+                        <input
+                            pInputText
+                            type="text"
+                            placeholder="Nome do cliente"
+                            formControlName="name"
+                        />
+                    </p-inputGroup>
+                </div>
+                <div class="col-12 md:col-4">
+                    <p-inputGroup class="w-full">
+                        <p-inputGroupAddon>
+                            <i
+                                class="pi pi-map-marker"
+                                style="line-height: 1.25"
+                            ></i>
+                        </p-inputGroupAddon>
+
+                        <input
+                            type="text"
+                            formControlName="street"
+                            pInputText
+                            placeholder="Endereço"
+                        />
+                    </p-inputGroup>
+                </div>
+                <div class="col-12 md:col-2">
+                    <p-inputGroup class="w-full">
+                        <p-inputGroupAddon>Nº </p-inputGroupAddon>
+
+                        <input
+                            type="text"
+                            pInputText
+                            formControlName="houseNumber"
+                            placeholder="Número"
+                        />
+                    </p-inputGroup>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-align-justify"></i>
+                        </p-inputGroupAddon>
+                        <input
+                            pInputText
+                            type="text"
+                            placeholder="Complemento"
+                            formControlName="complement"
+                        />
+                    </p-inputGroup>
+                </div>
+                <div class="col-12 md:col-6">
+                    <p-inputGroup class="w-full">
+                        <p-inputGroupAddon>
+                            <i class="pi pi-map" style="line-height: 1.25"></i>
+                        </p-inputGroupAddon>
+
+                        <input
+                            type="text"
+                            pInputText
+                            placeholder="Ponto de referência"
+                            formControlName="reference"
+                        />
+                    </p-inputGroup>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-directions"></i>
+                        </p-inputGroupAddon>
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="neighborhood"
+                            placeholder="Bairro"
+                        />
+                    </p-inputGroup>
+                </div>
+                <div class="col-12 md:col-6">
+                    <p-inputGroup class="w-full">
+                        <p-inputGroupAddon>
+                            <i
+                                class="pi pi-directions-alt"
+                                style="line-height: 1.25"
+                            ></i>
+                        </p-inputGroupAddon>
+
+                        <input
+                            type="text"
+                            pInputText
+                            formControlName="city"
+                            placeholder="Cidade"
+                        />
+                    </p-inputGroup>
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label for="price">Método de Pagamento</label>
+                    <p-dropdown
+                        appendTo="body"
+                        formControlName="paymentMethod"
+                        placeholder="Select"
+                        [options]="methods"
+                    >
+                        <ng-template let-method pTemplate="item">
+                            <div class="flex align-items-center">
+                                <img
+                                    [src]="method.src"
+                                    style="width: 31px; height: auto"
+                                />
+                                <span class="ml-2">{{ method.label }}</span>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="price">Tipo de Retirada</label>
+                    <p-dropdown
+                        appendTo="body"
+                        formControlName="isDelivery"
+                        placeholder="Select"
+                        [options]="deliveryDrop"
+                    >
+                        <ng-template let-delivery pTemplate="item">
+                            <div class="flex align-items-center">
+                                <img
+                                    [src]="delivery.src"
+                                    style="width: 41px; height: auto"
+                                />
+                                <span class="ml-2">{{ delivery.label }}</span>
+                            </div>
+                        </ng-template></p-dropdown
+                    >
+                </div>
+            </div>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left"> </ng-template>
+                <ng-template pTemplate="right">
+                    <button
+                        pButton
+                        pRipple
+                        icon="pi pi-shopping-cart"
+                        class="p-button-help"
+                        label="Criar Pedido na Plataforma"
+                        [disabled]="!orderForm.valid"
+                        type="submit"
+                    ></button>
+                </ng-template>
+            </p-toolbar>
+        </form>
+    </div>
+</div>

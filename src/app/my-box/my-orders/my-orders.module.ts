@@ -15,6 +15,11 @@ import { DividerModule } from 'primeng/divider';
 import { PanelModule } from 'primeng/panel';
 import { MyOrdersComponent } from './my-orders.component';
 import { MyOrdersRoutingModule } from './my-orders-routing.module';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CardModule } from 'primeng/card';
+import { TimerCountdownComponent } from '../timer-countdown/timer-countdown.component';
 
 @NgModule({
     imports: [
@@ -33,7 +38,10 @@ import { MyOrdersRoutingModule } from './my-orders-routing.module';
         SplitterModule,
         PanelModule,
         MyOrdersRoutingModule,
+        ToastModule,
+        CardModule,
     ],
-    declarations: [MyOrdersComponent], // Declarar o componente MyOrdersComponent aqui
+    declarations: [MyOrdersComponent, TimerCountdownComponent],
+    providers: [MessageService, DialogService, ConfirmationService],
 })
 export class MyOrdersModule {}

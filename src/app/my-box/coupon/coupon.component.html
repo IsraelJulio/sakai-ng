@@ -107,7 +107,7 @@
                             <span class="p-column-title">Valor</span>
                             {{
                                 product.couponType == 0
-                                    ? (product.value | currency)
+                                    ? (product.value | currency : "BRL")
                                     : product.value + "%"
                             }}
                         </td>
@@ -157,6 +157,7 @@
                     <div class="field">
                         <label for="name">Nome</label>
                         <input
+                            autocomplete="off"
                             type="text"
                             pInputText
                             id="name"
@@ -173,6 +174,7 @@
                             id="cod"
                             formControlName="cod"
                             required
+                            (input)="onInputChange($event)"
                         />
                     </div>
                     <div class="formgrid grid">

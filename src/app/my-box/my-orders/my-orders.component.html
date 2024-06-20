@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="grid">
     <div class="col-12 md:col-4 fill-height">
         <p-panel header="" [toggleable]="false" class="panel" id="analise">
@@ -7,7 +8,43 @@
                 >
             </ng-template>
             <div class="panel-content">
-                <div class="content">
+                <div class="content" *ngIf="oderlist">
+                    <div class="col-12" *ngFor="let order of oderlist">
+                        <p-card
+                            header=" {{ order.name }}"
+                            subheader="31971408913"
+                        >
+                            <div style="display: flex">
+                                <div *ngFor="let product of order.products">
+                                    <span
+                                        [class]="'product-badge status-instock'"
+                                    >
+                                        {{ product.name }}</span
+                                    >
+                                    &nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <ng-template pTemplate="footer">
+                                <div class="flex gap-3 mt-1">
+                                    <button
+                                        pButton
+                                        pRipple
+                                        label="Visualizar"
+                                        icon="pi pi-window-maximize"
+                                        class="p-button-info mr-2"
+                                        (click)="openNew()"
+                                        style="margin-right: 15px"
+                                    ></button>
+                                    <app-timer-countdown
+                                        minutes="5"
+                                        seconds="30"
+                                    ></app-timer-countdown>
+                                </div>
+                            </ng-template>
+                        </p-card>
+                    </div>
+                </div>
+                <div class="content" *ngIf="!oderlist">
                     <p>Nenhum pedido no momento.</p>
                     <p>Receba pedidos e visualize os que estão em produção.</p>
                 </div>

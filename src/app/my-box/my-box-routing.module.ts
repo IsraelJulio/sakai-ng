@@ -39,6 +39,12 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
                         (m) => m.CategoryModule
                     ),
             },
+            {
+                path: 'order',
+
+                loadChildren: () =>
+                    import('./order/order.module').then((m) => m.OrderModule),
+            },
         ]),
     ],
     exports: [RouterModule],

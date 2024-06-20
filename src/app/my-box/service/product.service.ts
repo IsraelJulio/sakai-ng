@@ -18,6 +18,8 @@ export class ProductService {
             product
         );
     get = () => this.http.get<Product[]>(`${environment.ApiUrl}/Product`);
+    getActives = () =>
+        this.http.get<Product[]>(`${environment.ApiUrl}/Product/actives`);
 
     getById = (id: string) =>
         this.http.get<Product>(`${environment.ApiUrl}/Product/${id}`);

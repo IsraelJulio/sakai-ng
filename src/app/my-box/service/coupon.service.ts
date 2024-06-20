@@ -18,9 +18,7 @@ export class CouponService {
         );
     get = () => this.http.get<Coupon[]>(`${environment.ApiUrl}/Coupon`);
     getActives = () =>
-        this.http.get<Coupon[]>(`${environment.ApiUrl}/Coupon/active`);
-    getAvailableCoupon = () =>
-        this.http.get<Coupon[]>(`${environment.ApiUrl}/Quiz/Available`);
+        this.http.get<Coupon[]>(`${environment.ApiUrl}/Coupon/actives`);
     getById = (id: string) =>
         this.http.get<Coupon>(`${environment.ApiUrl}/Coupon/${id}`);
     delete = (id: string) =>

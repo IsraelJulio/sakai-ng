@@ -1,4 +1,4 @@
-export const CouponType = {
-    Reais: 0,
-    Percent: 1,
-};
+export enum CouponType {
+    Reais = 0,
+    Percent = 1,
+}

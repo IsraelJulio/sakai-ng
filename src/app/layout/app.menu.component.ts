@@ -38,6 +38,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Criar Pedido',
                         icon: PrimeIcons.PLUS,
+                        routerLink: ['/order'],
                     },
                 ],
             },

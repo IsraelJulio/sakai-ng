@@ -68,11 +68,14 @@ export class CouponComponent implements OnInit {
         this.couponForm = this.fb.group({
             name: ['', Validators.required],
             id: [0],
-            couponType: [],
-            value: [],
+            couponType: [Validators.required],
+            value: [null, Validators.required],
             isActive: [false],
-            cod: [],
+            cod: ['', Validators.required],
         });
+    }
+    onInputChange(event: any) {
+        this.couponForm.get('cod').setValue(event.target.value.toUpperCase());
     }
     openNew() {
         this.coupon = {};
