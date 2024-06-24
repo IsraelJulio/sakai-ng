@@ -16,4 +16,6 @@ export interface MyOrder {
     neighborhood: string;
     complement: string;
     street: string;
+    status: number;
+    createdDate: string;
 }

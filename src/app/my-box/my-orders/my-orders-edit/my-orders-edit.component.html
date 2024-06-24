@@ -1,0 +1,125 @@
+<div class="col-12">
+    <div class="card">
+        <div
+            class="flex flex-wrap gap-2"
+            style="justify-content: space-between"
+        >
+            <h3>{{ order.name }}</h3>
+            <div class="flex flex-wrap gap-2 align-items-end">
+                <p-badge
+                    [value]="total | currency : 'BRL'"
+                    size="xlarge"
+                    severity="success"
+                ></p-badge>
+            </div>
+        </div>
+        <form
+            autocomplete="off"
+            (ngSubmit)="onSubmit()"
+            [formGroup]="orderForm"
+        >
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-8">
+                    <label htmlFor="firstname2">Items</label>
+                    <div style="display: flex">
+                        <div *ngFor="let product of order.products">
+                            <span [class]="'product-badge status-instock'">
+                                {{ product.name }}</span
+                            >
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 md:col-4">
+                    <label htmlFor="lastname2">Cupom</label>
+                    <br />
+                    <br />
+                    <div *ngIf="coupon">
+                        <span [class]="'product-badge status-lowstock'">
+                            {{ order.coupon?.name }}</span
+                        >
+                    </div>
+                    <div *ngIf="!coupon">Nenhum cupom selecionado</div>
+                </div>
+
+                <div class="col-12 md:col-4">
+                    <div class="col-12">
+                        <label for="street">Rua</label>
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="street"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 md:col-2">
+                    <div class="col-12">
+                        <label for="houseNumber">Nº</label>
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="houseNumber"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="col-12">
+                        <label for="complement">Complemento</label>
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="complement"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="col-12">
+                        <label for="price">Referencia</label>
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="reference"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 md:col-3">
+                    <div class="col-12">
+                        <label for="price">Bairro</label>
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="neighborhood"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <label for="price">Cidade</label>
+                    <div class="col-12">
+                        <input pInputText type="text" formControlName="city" />
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <label for="price">Metodo de pagamento</label>
+                    <div class="col-12">
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="paymentMethod"
+                        />
+                    </div>
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label for="price">Tipo de Retirada</label>
+                    <div class="col-12">
+                        <input
+                            pInputText
+                            type="text"
+                            formControlName="isDelivery"
+                        />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

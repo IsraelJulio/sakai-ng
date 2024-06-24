@@ -8,8 +8,8 @@ import { Subscription, interval } from 'rxjs';
 })
 export class TimerCountdownComponent implements OnInit {
     constructor() {}
-    @Input() minutes: number;
-    @Input() seconds: number;
+    @Input() createdDate: string;
+
     private subscription: Subscription;
 
     public dateNow = new Date();
@@ -27,10 +27,7 @@ export class TimerCountdownComponent implements OnInit {
 
     private getTimeDifference() {
         this.timeDifference =
-            this.dDay.getTime() +
-            this.minutes * 60000 +
-            this.seconds * 1000 -
-            new Date().getTime();
+            new Date().getTime() - new Date(this.createdDate).getTime();
         if (this.timeDifference > 0) {
             this.allocateTimeUnits(this.timeDifference);
         } else {

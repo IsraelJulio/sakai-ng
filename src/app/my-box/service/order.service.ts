@@ -20,6 +20,11 @@ export class OrderService {
     get = () => this.http.get<MyOrder[]>(`${environment.ApiUrl}/Order`);
     getActives = () =>
         this.http.get<MyOrder[]>(`${environment.ApiUrl}/Order/active`);
+    updateOrderStatus = (id: string) =>
+        this.http.post<MyOrder[]>(
+            `${environment.ApiUrl}/Order/updateStatus`,
+            id
+        );
     getById = (id: string) =>
         this.http.get<MyOrder>(`${environment.ApiUrl}/Order/${id}`);
     delete = (id: string) =>

@@ -6,4 +6,5 @@ export interface Coupon {
     isActive: boolean;
     id: string;
     cod: string;
+    name: string;
 }

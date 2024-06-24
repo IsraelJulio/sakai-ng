@@ -1,0 +1,26 @@
+<p-card header=" {{ order.name }}" subheader=" {{ order.phoneNumber }}">
+    <div style="display: flex">
+        <div *ngFor="let product of order.products">
+            <span [class]="'product-badge status-instock'">
+                {{ product.name }}</span
+            >
+            &nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="flex gap-3 mt-1">
+            <button
+                pButton
+                pRipple
+                label="Visualizar"
+                icon="pi pi-window-maximize"
+                class="p-button-info mr-2"
+                (click)="show(order)"
+                style="margin-right: 15px"
+            ></button>
+            <app-timer-countdown
+                [createdDate]="order.createdAt"
+            ></app-timer-countdown>
+        </div>
+    </ng-template>
+</p-card>

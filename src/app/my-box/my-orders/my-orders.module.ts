@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -20,6 +20,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CardModule } from 'primeng/card';
 import { TimerCountdownComponent } from '../timer-countdown/timer-countdown.component';
+import { BadgeModule } from 'primeng/badge';
+import { MyOrdersEditComponent } from './my-orders-edit/my-orders-edit.component';
+import { CardOrderComponent } from './card-order/card-order.component';
 
 @NgModule({
     imports: [
@@ -40,8 +43,15 @@ import { TimerCountdownComponent } from '../timer-countdown/timer-countdown.comp
         MyOrdersRoutingModule,
         ToastModule,
         CardModule,
+        ReactiveFormsModule,
+        BadgeModule,
     ],
-    declarations: [MyOrdersComponent, TimerCountdownComponent],
+    declarations: [
+        MyOrdersComponent,
+        TimerCountdownComponent,
+        MyOrdersEditComponent,
+        CardOrderComponent,
+    ],
     providers: [MessageService, DialogService, ConfirmationService],
 })
 export class MyOrdersModule {}

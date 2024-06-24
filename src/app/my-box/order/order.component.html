@@ -21,7 +21,7 @@
         >
             <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
-                    <label htmlFor="firstname2">Items</label>
+                    <label htmlFor="firstname2">Itens</label>
                     <p-multiSelect
                         [options]="products"
                         formControlName="products"
@@ -30,6 +30,7 @@
                         class="multiselect-custom"
                         display="chip"
                         (onChange)="totalProducts($event.value)"
+                        [maxSelectedLabels]="10"
                     >
                         <ng-template let-product pTemplate="item">
                             <div class="flex align-items-center">

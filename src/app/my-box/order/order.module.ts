@@ -26,6 +26,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ChipsModule } from 'primeng/chips';
 
 @NgModule({
     declarations: [OrderComponent],
@@ -55,6 +56,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
         InputGroupAddonModule,
         CheckboxModule,
         AutoCompleteModule,
+        ChipsModule,
     ],
     providers: [MessageService, DialogService, ConfirmationService],
 })
