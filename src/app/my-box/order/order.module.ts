@@ -27,6 +27,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ChipsModule } from 'primeng/chips';
+import { MenuComponent } from '../cardapio/menu/menu.component';
 
 @NgModule({
     declarations: [OrderComponent],

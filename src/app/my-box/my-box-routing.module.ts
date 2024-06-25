@@ -1,3 +1,5 @@
+import { MenuModule } from 'primeng/menu';
+import { MenuManagementComponent } from './cardapio/menu-management/menu-management.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -44,6 +46,12 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 
                 loadChildren: () =>
                     import('./order/order.module').then((m) => m.OrderModule),
+            },
+            {
+                path: 'menu-management',
+
+                loadChildren: () =>
+                    import('./cardapio/menu.module').then((m) => m.MenuModule),
             },
         ]),
     ],

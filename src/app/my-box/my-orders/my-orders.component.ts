@@ -38,13 +38,15 @@ export class MyOrdersComponent implements OnInit {
     trackByOrderId(index: number, order: MyOrder): number {
         return +order.id;
     }
-    getAnalyse(statusid: number): MyOrder[] {
-        return this.orderlist.filter((x) => x.status === 0);
+    getOrderByStatus(statusid: number): MyOrder[] {
+        if (this.orderlist === undefined) return [];
+        return this.orderlist.filter((x) => x.status === statusid);
     }
     getProduction(statusid: number): MyOrder[] {
         return this.orderlist.filter((x) => x.status === 1);
     }
     getReady(statusid: number): MyOrder[] {
+        console.log(this.orderlist.filter((x) => x.status === 2));
         return this.orderlist.filter((x) => x.status === 2);
     }
 }

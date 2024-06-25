@@ -56,6 +56,13 @@ import { AppLayoutComponent } from './layout/app.layout.component';
                     ],
                 },
                 {
+                    path: 'menu',
+                    loadChildren: () =>
+                        import('./my-box/cardapio/menu.module').then(
+                            (m) => m.MenuModule
+                        ),
+                },
+                {
                     path: 'auth',
                     loadChildren: () =>
                         import('./demo/components/auth/auth.module').then(

@@ -34,6 +34,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Visualização no app',
                         icon: PrimeIcons.TABLET,
+                        routerLink: ['/menu-management/edit'],
                     },
                     {
                         label: 'Criar Pedido',
