@@ -42,7 +42,7 @@ export class CardOrderComponent {
         this.ref.onClose.subscribe((data: any) => {
             if (data?.summary == 'next') {
                 this.orderService.updateOrderStatus(order.id).subscribe((x) => {
-                    this.oderlist = x;
+                    this.orderService.reset(x);
                     this.messageService.add({
                         severity: 'success',
                         summary: '',

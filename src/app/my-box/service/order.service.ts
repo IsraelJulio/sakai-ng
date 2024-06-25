@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { MyOrder } from 'src/app/domain/my-order';
 import { environment } from 'src/environments/environment';
@@ -9,7 +9,16 @@ import { environment } from 'src/environments/environment';
     providedIn: 'root',
 })
 export class OrderService {
+    private resetList = new Subject();
+
+    resetSource$ = this.resetList.asObservable();
+
+    reset(newList: MyOrder[]) {
+        this.resetList.next(newList);
+    }
+
     constructor(protected http: HttpClient) {}
+
     post = (myOrder: MyOrder) =>
         this.http.post<MyOrder[]>(`${environment.ApiUrl}/Order`, myOrder);
     put = (myOrder: MyOrder) =>
