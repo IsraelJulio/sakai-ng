@@ -1,1 +1,85 @@
-<p>menu-management works!</p>
+<p-toast></p-toast>
+<div class="col-12 xl:col-12">
+    <div class="card">
+        <h5>Categorias</h5>
+        <p-orderList
+            [value]="categoriesAvailable"
+            header="Selecione a ordem que deseja que as categorias estejam no cardápio"
+            [dragdrop]="true"
+            [listStyle]="{ height: '250px' }"
+        >
+            <ng-template let-cat pTemplate="item">
+                <div>{{ cat.name }}</div>
+            </ng-template>
+        </p-orderList>
+        <div class="botoes" style="display: flex; justify-content: flex-end">
+            <button
+                pButton
+                pRipple
+                label="Save"
+                icon="pi pi-check"
+                class="p-button-text"
+                (click)="saveCategoryOrder()"
+            ></button>
+        </div>
+    </div>
+</div>
+<div
+    class="grid"
+    style="display: flex; justify-content: space-evenly; margin-top: 15px"
+>
+    <div *ngFor="let group of groupedCategories">
+        <div class="card" style="margin-top: 15px">
+            <h5>{{ group.category.name }}</h5>
+            <p-orderList
+                [value]="group.products"
+                header="Ordem dos produtos dentro das categorias"
+                [dragdrop]="true"
+                [listStyle]="{ height: '650px' }"
+            >
+                <ng-template let-product pTemplate="item">
+                    <div class="flex align-items-center p-2 w-full flex-wrap">
+                        <div class="w-full text-center lg:w-auto lg:text-left">
+                            <img
+                                [src]="product.imageBase64"
+                                [alt]="product.name"
+                                width="100"
+                                class="mr-3 shadow-3 w-7rem mb-3 lg:w-5rem lg:mb-auto"
+                            />
+                        </div>
+                        <div class="flex-1">
+                            <div>{{ product.name }}</div>
+                            <span class="vertical-align-middle line-height-1">{{
+                                product.totalPrice
+                            }}</span>
+                        </div>
+                        <div class="flex flex-column align-items-end">
+                            <h6 class="mb-2">
+                                {{ +product.price | currency : "BRL" }}
+                            </h6>
+                            <p-tag
+                                [severity]="
+                                    product.isActive ? 'success' : 'danger'
+                                "
+                                [value]="product.isActive ? 'ATIVO' : 'INATIVO'"
+                            ></p-tag>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-orderList>
+            <div
+                class="botoes"
+                style="display: flex; justify-content: flex-end"
+            >
+                <button
+                    pButton
+                    pRipple
+                    label="Save"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="saveProductOrder()"
+                ></button>
+            </div>
+        </div>
+    </div>
+</div>

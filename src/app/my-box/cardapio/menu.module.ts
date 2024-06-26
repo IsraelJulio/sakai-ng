@@ -18,6 +18,9 @@ import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { PickListModule } from 'primeng/picklist';
+import { OrderListModule } from 'primeng/orderlist';
+import { TagModule } from 'primeng/tag';
 
 @NgModule({
     declarations: [MenuManagementComponent],
@@ -25,7 +28,8 @@ import { DialogService } from 'primeng/dynamicdialog';
         CommonModule,
         MenuRoutingModule,
         TableModule,
-
+        PickListModule,
+        OrderListModule,
         FormsModule,
         ButtonModule,
         ReactiveFormsModule,
@@ -40,6 +44,7 @@ import { DialogService } from 'primeng/dynamicdialog';
         InputNumberModule,
         DialogModule,
         InputSwitchModule,
+        TagModule,
     ],
     providers: [MessageService, DialogService, ConfirmationService],
 })

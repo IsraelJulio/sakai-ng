@@ -26,7 +26,8 @@ export class CategoryService {
         this.http.get<Category>(`${environment.ApiUrl}/Category/${id}`);
     delete = (id: string) =>
         this.http.delete<Category[]>(`${environment.ApiUrl}/Category/${id}`);
-
+    orderCategory = (categories: Category[]) =>
+        this.http.post(`${environment.ApiUrl}/Category/order`, categories);
     deleteList(ids: string[]): Observable<Category[]> {
         return this.http.delete<Category[]>(
             `${environment.ApiUrl}/Category/DeleteByIds`,

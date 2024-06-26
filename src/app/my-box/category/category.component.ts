@@ -66,6 +66,7 @@ export class CategoryComponent implements OnInit {
             name: ['', Validators.required],
             id: [0],
             isActive: [false],
+            order: [],
         });
     }
     openNew() {

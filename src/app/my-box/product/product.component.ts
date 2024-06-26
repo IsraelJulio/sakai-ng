@@ -80,6 +80,7 @@ export class ProductComponent implements OnInit {
             categoryId: [null, Validators.required],
             status: [],
             imageBase64: [],
+            order: [],
         });
     }
     openNew() {
