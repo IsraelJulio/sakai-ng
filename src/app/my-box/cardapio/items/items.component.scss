@@ -1,0 +1,39 @@
+.product-container {
+    display: flex;
+    flex-direction: row-reverse; /* Image to the right */
+    align-items: center;
+    padding: 10px;
+    gap: 20px; /* Adds space between image and text */
+}
+
+.product-image {
+    flex-shrink: 0; /* Prevents image from shrinking */
+    max-width: 100px; /* Ensures the image does not grow too large */
+}
+
+.product-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adds space between text elements */
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.product-description {
+    font-size: 14px;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.product-input-number {
+    margin-top: 10px; /* Adds some spacing above the input number */
+}
+

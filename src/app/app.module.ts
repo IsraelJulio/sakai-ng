@@ -16,9 +16,12 @@ import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { MenuComponent } from './my-box/cardapio/menu/menu.component';
+import { TopbarComponent } from './my-box/cardapio/layout/topbar/topbar.component';
+import { FooterComponent } from './my-box/cardapio/layout/footer/footer.component';
+import { ItemsComponent } from './my-box/cardapio/items/items.component';
 
 @NgModule({
-    declarations: [AppComponent, NotfoundComponent, MenuComponent],
+    declarations: [AppComponent, NotfoundComponent],
     imports: [AppRoutingModule, AppLayoutModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

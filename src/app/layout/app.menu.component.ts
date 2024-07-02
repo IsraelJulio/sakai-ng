@@ -32,8 +32,13 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-server',
                 items: [
                     {
-                        label: 'Visualização no app',
+                        label: 'Visualização do cliente',
                         icon: PrimeIcons.TABLET,
+                        routerLink: ['/menu'],
+                    },
+                    {
+                        label: 'Gerenciar visão do cliente',
+                        icon: PrimeIcons.FILE_EDIT,
                         routerLink: ['/menu-management/edit'],
                     },
                     {

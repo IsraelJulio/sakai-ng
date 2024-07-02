@@ -141,16 +141,38 @@
                                 combo</label
                             >
                             <p-multiSelect
-                                [options]="products"
+                                [options]="groupedCategories"
+                                [group]="true"
                                 formControlName="products"
                                 placeholder="Selecione os produtos"
                                 optionLabel="name"
                                 class="multiselect-custom"
                                 display="chip"
                                 appendTo="body"
+                                scrollHeight="400px"
                                 (onChange)="totalProducts($event.value)"
                                 [maxSelectedLabels]="10"
                             >
+                                <ng-template let-cat pTemplate="group">
+                                    <div class="flex align-items-center">
+                                        <span class="ml-2"
+                                            >{{ cat.name }} | &nbsp;
+                                        </span>
+                                        <span
+                                            [class]="
+                                                'product-badge status-' +
+                                                (cat.isActive
+                                                    ? 'instock'
+                                                    : 'outofstock')
+                                            "
+                                            >{{
+                                                cat.isActive
+                                                    ? "Ativo"
+                                                    : "Desativado"
+                                            }}</span
+                                        >
+                                    </div>
+                                </ng-template>
                                 <ng-template let-product pTemplate="item">
                                     <div class="flex align-items-center">
                                         <img

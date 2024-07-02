@@ -21,9 +21,23 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { PickListModule } from 'primeng/picklist';
 import { OrderListModule } from 'primeng/orderlist';
 import { TagModule } from 'primeng/tag';
+import { TopbarComponent } from './layout/topbar/topbar.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { ItemsComponent } from './items/items.component';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { MenuComponent } from './menu/menu.component';
+import { RouterModule } from '@angular/router';
+import { TruncatePipe } from './TruncatePipe';
 
 @NgModule({
-    declarations: [MenuManagementComponent],
+    declarations: [
+        MenuManagementComponent,
+        TopbarComponent,
+        FooterComponent,
+        ItemsComponent,
+        MenuComponent,
+        TruncatePipe,
+    ],
     imports: [
         CommonModule,
         MenuRoutingModule,
@@ -45,7 +59,14 @@ import { TagModule } from 'primeng/tag';
         DialogModule,
         InputSwitchModule,
         TagModule,
+        RouterModule,
+        InputNumberModule,
     ],
-    providers: [MessageService, DialogService, ConfirmationService],
+    providers: [
+        MessageService,
+        DialogService,
+        ConfirmationService,
+        LayoutService,
+    ],
 })
 export class MenuModule {}

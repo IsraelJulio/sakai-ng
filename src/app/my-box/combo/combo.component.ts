@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ProductService } from '../service/product.service';
-import { lastValueFrom } from 'rxjs';
+import { forkJoin, lastValueFrom, map } from 'rxjs';
 import { Combo } from 'src/app/domain/combo';
 import { Product } from 'src/app/domain/product';
 import { ComboService } from '../service/combo.service';
 import { Table } from 'primeng/table';
+import { Category, CategoryProduct } from 'src/app/domain/category';
 
 @Component({
     selector: 'app-combo',
@@ -22,7 +23,7 @@ export class ComboComponent implements OnInit {
     deleteProductsDialog: boolean = false;
     checked: boolean = false;
     // combos: Product[] = [];
-
+    groupedCategories: CategoryProduct[] = [];
     product: Product = {};
     totalProduct: number = 0;
     selectedCombo: Combo[] = [];
@@ -45,8 +46,22 @@ export class ComboComponent implements OnInit {
         this.buildForm();
     }
     async ngOnInit() {
-        this.combos = await lastValueFrom(this.comboService.get());
-        this.products = await lastValueFrom(this.productService.getActives());
+        forkJoin({
+            combos: this.comboService.get(),
+            products: this.productService
+                .get()
+                .pipe(
+                    map((products) =>
+                        products.sort((a, b) => a.order - b.order)
+                    )
+                ),
+        }).subscribe(({ combos, products }) => {
+            this.combos = combos;
+            this.products = products;
+            this.groupCategoriesByIsActive();
+        });
+
+        this.groupCategoriesByIsActive();
         this.cols = [
             { field: 'product', header: 'Product' },
             { field: 'price', header: 'Price' },
@@ -64,6 +79,30 @@ export class ComboComponent implements OnInit {
                 .get('maxValue')
                 .setValue(this.comboForm.get('minValue').value);
         return;
+    }
+    groupCategoriesByIsActive(): void {
+        if (this.products === undefined) return;
+        const groups = this.products.reduce((groups, product) => {
+            const key = product.category.id;
+            if (!groups[key]) {
+                const categoryProduct = new CategoryProduct(
+                    product.category.name,
+                    product.category.id,
+                    product.category.isActive,
+                    []
+                );
+                groups[key] = {
+                    category: categoryProduct,
+                };
+            }
+            groups[key].category.items.push(product);
+            return groups;
+        }, {} as { category: CategoryProduct });
+        this.groupedCategories = Object.keys(groups).map(
+            (key) => groups[key].category
+        );
+        // .sort((a, b) => a.category.order - b.category.order);
+        console.log(this.groupedCategories);
     }
     reload() {
         this.comboService

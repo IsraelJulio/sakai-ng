@@ -1,0 +1,40 @@
+<p-toast></p-toast>
+
+<div class="grid">
+    <div *ngFor="let group of groupedCategories">
+        <h5>{{ group.category.name }}</h5>
+        <div class="card" style="margin: 5px">
+            <div *ngIf="group.category.id != -1">
+                <div *ngFor="let product of group.products">
+                    <div
+                        class="flex align-items-center p-2 w-full flex-wrap product-container"
+                        (click)="selectProduct(product)"
+                    >
+                        <div class="product-text flex-1">
+                            <div class="product-name">{{ product.name }}</div>
+                            <span
+                                class="product-description vertical-align-middle line-height-1"
+                            >
+                                {{ product.description | truncate : 50 }}
+                            </span>
+                            <h6 class="product-price mb-2">
+                                {{ +product.price | currency : "BRL" }}
+                            </h6>
+                        </div>
+                        <div
+                            class="product-image w-full text-center lg:w-auto lg:text-left"
+                        >
+                            <img
+                                [src]="product.imageBase64"
+                                [alt]="product.name"
+                                class="mr-3 shadow-3 w-7rem lg:w-5rem"
+                            />
+                        </div>
+                    </div>
+                    <div class="layout-footer"></div>
+                </div>
+            </div>
+            <div *ngIf="group.category.id == -1"></div>
+        </div>
+    </div>
+</div>

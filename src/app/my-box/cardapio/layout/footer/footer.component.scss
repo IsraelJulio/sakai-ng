@@ -1,0 +1,24 @@
+.layout-footer {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.layout-topbar-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+}
+
+.layout-topbar-button i {
+    font-size: 24px;
+}
+
+.layout-topbar-button span {
+    margin-top: 5px;
+    font-size: 14px;
+}
