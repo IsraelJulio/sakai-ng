@@ -71,6 +71,14 @@ export class AppMenuComponent implements OnInit {
                             exact: true,
                         },
                     },
+                    {
+                        label: 'Combos',
+                        icon: PrimeIcons.GIFT,
+                        routerLink: ['/combo'],
+                        routerLinkActiveOptions: {
+                            exact: true,
+                        },
+                    },
                 ],
             },
 

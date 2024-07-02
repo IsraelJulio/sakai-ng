@@ -1,33 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { Product } from 'src/app/domain/product';
-import { ProductService } from '../service/product.service';
-import { CategoryService } from '../service/category.service';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { ProductService } from '../service/product.service';
 import { lastValueFrom } from 'rxjs';
-import { Category } from 'src/app/domain/category';
+import { Combo } from 'src/app/domain/combo';
+import { Product } from 'src/app/domain/product';
+import { ComboService } from '../service/combo.service';
+import { Table } from 'primeng/table';
 
 @Component({
-    selector: 'app-category',
-    templateUrl: './category.component.html',
-    styleUrl: './category.component.scss',
+    selector: 'app-combo',
+    templateUrl: './combo.component.html',
+    styleUrl: './combo.component.scss',
 })
-export class CategoryComponent implements OnInit {
+export class ComboComponent implements OnInit {
     productDialog: boolean = false;
     uploadedFiles: any[] = [];
-    categories: Category[] = [];
+    combos: Combo[] = [];
     deleteProductDialog: boolean = false;
-    productForm: FormGroup | undefined;
+    comboForm: FormGroup | undefined;
     deleteProductsDialog: boolean = false;
     checked: boolean = false;
-    // categories: Product[] = [];
+    // combos: Product[] = [];
 
     product: Product = {};
-
-    selectedCategory: Category[] = [];
+    totalProduct: number = 0;
+    selectedCombo: Combo[] = [];
     Apiproducts: Product[] = [];
-
+    products: Product[] = [];
     submitted: boolean = false;
 
     cols: any[] = [];
@@ -39,34 +39,49 @@ export class CategoryComponent implements OnInit {
     constructor(
         private productService: ProductService,
         private messageService: MessageService,
-        private categoryService: CategoryService,
+        private comboService: ComboService,
         private fb: UntypedFormBuilder
     ) {
         this.buildForm();
     }
     async ngOnInit() {
-        this.categories = await lastValueFrom(this.categoryService.get());
-
+        this.combos = await lastValueFrom(this.comboService.get());
+        this.products = await lastValueFrom(this.productService.getActives());
         this.cols = [
             { field: 'product', header: 'Product' },
             { field: 'price', header: 'Price' },
-            { field: 'category', header: 'Category' },
+            { field: 'combo', header: 'combo' },
             { field: 'rating', header: 'Reviews' },
             { field: 'isActive', header: 'Status' },
         ];
     }
+    getMax() {
+        if (
+            this.comboForm.get('minValue').value >
+            this.comboForm.get('maxValue').value
+        )
+            this.comboForm
+                .get('maxValue')
+                .setValue(this.comboForm.get('minValue').value);
+        return;
+    }
     reload() {
-        this.categoryService
+        this.comboService
             .get()
-            .subscribe((response) => (this.categories = response));
+            .subscribe((response) => (this.combos = response));
         this.uploadedFiles = [];
     }
     buildForm() {
-        this.productForm = this.fb.group({
+        this.comboForm = this.fb.group({
             name: ['', Validators.required],
+            products: [''],
+            description: [''],
+            minValue: [''],
+            maxValue: [''],
             id: [0],
             isActive: [false],
             order: [],
+            categoryId: [-1],
         });
     }
     openNew() {
@@ -76,7 +91,13 @@ export class CategoryComponent implements OnInit {
         this.submitted = false;
         this.productDialog = true;
     }
-
+    totalProducts(event: Product[]) {
+        var numbers = event.map((product) => product.price);
+        this.totalProduct = numbers.reduce(
+            (total, currentValue) => total + currentValue,
+            0
+        );
+    }
     deleteSelectedProducts() {
         this.deleteProductsDialog = true;
     }
@@ -84,7 +105,7 @@ export class CategoryComponent implements OnInit {
     editProduct(product: Product) {
         this.uploadedFiles = [];
         this.product = { ...product };
-        this.productForm.patchValue(this.product);
+        this.comboForm.patchValue(this.product);
         this.productDialog = true;
     }
 
@@ -95,16 +116,14 @@ export class CategoryComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteProductsDialog = false;
-        this.categories = this.categories.filter((val) =>
-            this.selectedCategory.includes(val)
+        this.combos = this.combos.filter((val) =>
+            this.selectedCombo.includes(val)
         );
-        const categoryIds: string[] = this.categories.map(
-            (product) => product.id
-        );
-        this.categoryService
-            .deleteList(categoryIds)
+        const comboIds: string[] = this.combos.map((product) => product.id);
+        this.comboService
+            .deleteList(comboIds)
             .subscribe({
-                next: async (response: Category[]) => {
+                next: async (response: Combo[]) => {
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',
@@ -112,7 +131,7 @@ export class CategoryComponent implements OnInit {
                         life: 3000,
                     });
                     console.log(response, 'response');
-                    this.categories = response;
+                    this.combos = response;
                     this.productDialog = false;
                 },
                 error: (err: any) => {
@@ -131,11 +150,11 @@ export class CategoryComponent implements OnInit {
         this.product = {};
     }
 
-    confirmDelete(selectedProduct: Category) {
-        this.categoryService
+    confirmDelete(selectedProduct: Combo) {
+        this.comboService
             .delete(selectedProduct.id)
             .subscribe({
-                next: async (response: Category[]) => {
+                next: async (response: Combo[]) => {
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',
@@ -143,7 +162,7 @@ export class CategoryComponent implements OnInit {
                         life: 3000,
                     });
                     console.log(response, 'response');
-                    this.categories = response;
+                    this.combos = response;
                     this.productDialog = false;
                 },
                 error: (err: any) => {
@@ -169,13 +188,13 @@ export class CategoryComponent implements OnInit {
 
     saveProduct() {
         this.submitted = true;
-        let request = this.productForm.getRawValue();
+        let request = this.comboForm.getRawValue();
         console.log(request);
         if (request.id != 0) {
-            this.categoryService
+            this.comboService
                 .put(request)
                 .subscribe({
-                    next: async (response: Category[]) => {
+                    next: async (response: Combo[]) => {
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Successful',
@@ -183,7 +202,7 @@ export class CategoryComponent implements OnInit {
                             life: 3000,
                         });
                         console.log(response, 'response');
-                        this.categories = response;
+                        this.combos = response;
                         this.productDialog = false;
                     },
                     error: (err: any) => {
@@ -198,17 +217,17 @@ export class CategoryComponent implements OnInit {
                 .add(() => {});
         } else {
             console.log(request);
-            this.categoryService
+            this.comboService
                 .post(request)
                 .subscribe({
-                    next: (response: Category[]) => {
+                    next: (response: Combo[]) => {
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Successful',
                             detail: 'Produto Criado',
                             life: 3000,
                         });
-                        this.categories = response;
+                        this.combos = response;
                         this.productDialog = false;
                     },
                     error: (err: any) => {

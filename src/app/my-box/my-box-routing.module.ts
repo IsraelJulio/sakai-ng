@@ -53,6 +53,12 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
                 loadChildren: () =>
                     import('./cardapio/menu.module').then((m) => m.MenuModule),
             },
+            {
+                path: 'combo',
+
+                loadChildren: () =>
+                    import('./combo/combo.module').then((m) => m.ComboModule),
+            },
         ]),
     ],
     exports: [RouterModule],
