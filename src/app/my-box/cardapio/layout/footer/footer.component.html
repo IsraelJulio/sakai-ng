@@ -5,7 +5,18 @@
     </button>
 
     <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
-        <i class="pi pi-shopping-cart"></i>
+        <i
+            *ngIf="hasProduct"
+            class="pi pi-cart-plus"
+            pBadge
+            style="font-size: 2rem"
+            value="{{ totalItems }}"
+        ></i>
+        <i
+            *ngIf="!hasProduct"
+            class="pi pi-shopping-cart"
+            style="font-size: 2rem"
+        ></i>
         <span>Carrinho</span>
     </button>
 </div>

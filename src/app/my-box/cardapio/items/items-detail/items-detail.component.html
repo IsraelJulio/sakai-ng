@@ -1,0 +1,43 @@
+<div class="card mb-3">
+    <div>
+        <h2>{{ product.name }}</h2>
+        <img
+            [src]="product.imageBase64"
+            [alt]="product.image"
+            width="150"
+            class="mt-0 mx-auto mb-5 block shadow-2"
+            *ngIf="product.image"
+        />
+        <h4>{{ product.price | currency : "BRL" }}</h4>
+        <p>{{ product.description }}</p>
+    </div>
+</div>
+<div class="p-fluid p-formgrid grid">
+    <div
+        style="
+            display: flex;
+            justify-content: space-evenly;
+            align-items: stretch;
+            margin-top: 5px;
+        "
+    >
+        <p-inputNumber
+            id="minvalue"
+            [(ngModel)]="inputValue"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            spinnerMode="horizontal"
+            [step]="1"
+            [min]="0"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+        ></p-inputNumber>
+
+        <p-button
+            type="button"
+            label="Adicionar"
+            icon="pi pi-shopping-cart"
+            (click)="avanceDialog({ summary: 'next' })"
+        ></p-button>
+    </div>
+</div>

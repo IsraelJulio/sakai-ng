@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { MyOrder } from 'src/app/domain/my-order';
+import { Product } from 'src/app/domain/product';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,6 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class OrderService {
     private resetList = new Subject();
+    public orderList = new BehaviorSubject<MyOrder | null>(new MyOrder());
 
     resetSource$ = this.resetList.asObservable();
 

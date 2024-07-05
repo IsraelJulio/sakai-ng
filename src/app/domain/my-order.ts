@@ -1,12 +1,12 @@
 import { Coupon } from './coupon';
 import { Product } from './product';
 
-export interface MyOrder {
+export class MyOrder {
     name: string;
     id: string;
     totalPrice: number;
     coupon: Coupon;
-    products: Product[];
+    products: Product[] = [];
     phoneNumber: number;
     paymentMethod: number;
     isDelivery: boolean;

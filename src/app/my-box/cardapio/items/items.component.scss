@@ -36,4 +36,20 @@
 .product-input-number {
     margin-top: 10px; /* Adds some spacing above the input number */
 }
+.product-container:hover{
+    cursor:pointer
+}
+/* styles.css or component's CSS file */
+.custom-dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+p-inputnumber.ng-dirty.ng-invalid > .p-inputnumber > .p-inputtext {
+    flex: 0 1 35%;
+    max-width: 35%;
+  }
 

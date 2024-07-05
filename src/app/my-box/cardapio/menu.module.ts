@@ -28,6 +28,8 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
 import { TruncatePipe } from './TruncatePipe';
+import { ItemsDetailComponent } from './items/items-detail/items-detail.component';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
     declarations: [
@@ -37,6 +39,7 @@ import { TruncatePipe } from './TruncatePipe';
         ItemsComponent,
         MenuComponent,
         TruncatePipe,
+        ItemsDetailComponent,
     ],
     imports: [
         CommonModule,
@@ -61,6 +64,7 @@ import { TruncatePipe } from './TruncatePipe';
         TagModule,
         RouterModule,
         InputNumberModule,
+        BadgeModule,
     ],
     providers: [
         MessageService,
