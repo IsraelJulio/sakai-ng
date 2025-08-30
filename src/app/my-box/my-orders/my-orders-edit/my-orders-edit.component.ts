@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MyOrder } from 'src/app/domain/my-order';
+import { PaymentMethodPipe } from '../../pipes/payment-method';
 
 @Component({
     selector: 'app-my-orders-edit',
@@ -13,10 +15,37 @@ export class MyOrdersEditComponent {
     orderForm: FormGroup | undefined;
     total: number = 0;
     coupon: boolean = false;
+    deliveryDrop: any[] = [];
+    methods: any[] = [];
     constructor(
         private config: DynamicDialogConfig,
         private fb: UntypedFormBuilder
     ) {
+        this.methods = [
+            { label: 'Pix', value: 0, src: 'assets/my-box/pix.png' },
+            {
+                label: 'Card',
+                value: 1,
+                src: 'assets/my-box/cartao.png',
+            },
+            {
+                label: 'Money',
+                value: 2,
+                src: 'assets/my-box/dinheiro.png',
+            },
+        ];
+        this.deliveryDrop = [
+            {
+                label: 'Delivery',
+                value: true,
+                src: 'assets/my-box/delivery.png',
+            },
+            {
+                label: 'Balcão',
+                value: false,
+                src: 'assets/my-box/balcao.jpg',
+            },
+        ];
         this.order = config.data;
         this.coupon = this.order.coupon ? true : false;
         console.log(this.coupon);

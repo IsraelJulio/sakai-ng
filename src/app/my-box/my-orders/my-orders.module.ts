@@ -23,9 +23,12 @@ import { TimerCountdownComponent } from '../timer-countdown/timer-countdown.comp
 import { BadgeModule } from 'primeng/badge';
 import { MyOrdersEditComponent } from './my-orders-edit/my-orders-edit.component';
 import { CardOrderComponent } from './card-order/card-order.component';
+import { PaymentMethodPipe } from '../pipes/payment-method';
+import { DropdownItem, DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
     imports: [
+        DropdownModule,
         CommonModule,
         FormsModule,
         ToolbarModule,
@@ -50,6 +53,7 @@ import { CardOrderComponent } from './card-order/card-order.component';
         MyOrdersComponent,
         TimerCountdownComponent,
         MyOrdersEditComponent,
+        PaymentMethodPipe,
         CardOrderComponent,
     ],
     providers: [MessageService, DialogService, ConfirmationService],

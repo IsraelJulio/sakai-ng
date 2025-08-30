@@ -93,30 +93,42 @@
                     </div>
                 </div>
                 <div class="col-12 md:col-6">
-                    <label for="price">Cidade</label>
                     <div class="col-12">
+                        <label for="price">Cidade</label>
                         <input pInputText type="text" formControlName="city" />
                     </div>
                 </div>
                 <div class="col-12 md:col-6">
                     <label for="price">Metodo de pagamento</label>
                     <div class="col-12">
-                        <input
-                            pInputText
-                            type="text"
-                            formControlName="paymentMethod"
-                        />
+                        <span>{{
+                            orderForm.get("paymentMethod")?.value
+                                | paymentMethod
+                        }}</span>
                     </div>
                 </div>
 
-                <div class="field col-12 md:col-6">
-                    <label for="price">Tipo de Retirada</label>
+                <div class="col-12 md:col-6">
                     <div class="col-12">
-                        <input
-                            pInputText
-                            type="text"
+                        <label for="price">Tipo de Retirada</label>
+                        <p-dropdown
+                            appendTo="body"
                             formControlName="isDelivery"
-                        />
+                            placeholder="Select"
+                            [options]="deliveryDrop"
+                        >
+                            <ng-template let-delivery pTemplate="item">
+                                <div class="flex align-items-center">
+                                    <img
+                                        [src]="delivery.src"
+                                        style="width: 41px; height: auto"
+                                    />
+                                    <span class="ml-2">{{
+                                        delivery.label
+                                    }}</span>
+                                </div>
+                            </ng-template></p-dropdown
+                        >
                     </div>
                 </div>
             </div>

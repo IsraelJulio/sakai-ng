@@ -12,15 +12,18 @@
         <p>{{ product.description }}</p>
     </div>
 </div>
-<div class="p-fluid p-formgrid grid">
-    <div
-        style="
-            display: flex;
-            justify-content: space-evenly;
-            align-items: stretch;
-            margin-top: 5px;
-        "
-    >
+
+<div
+    class="p-fluid p-formgrid grid"
+    style="
+        display: flex;
+        justify-content: space-evenly;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        margin-top: 5px;
+    "
+>
+    <div style="display: flex">
         <p-inputNumber
             id="minvalue"
             [(ngModel)]="inputValue"
@@ -32,7 +35,8 @@
             incrementButtonIcon="pi pi-plus"
             decrementButtonIcon="pi pi-minus"
         ></p-inputNumber>
-
+    </div>
+    <div style="display: flex">
         <p-button
             type="button"
             label="Adicionar"

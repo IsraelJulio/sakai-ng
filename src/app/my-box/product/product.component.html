@@ -107,7 +107,7 @@
                         <td style="width: 17%; min-width: 12rem">
                             <span class="p-column-title">Imagem</span>
                             <img
-                                [src]="product.imageBase64"
+                                [src]="product.imageUrl"
                                 [alt]="product.name"
                                 width="100"
                                 class="shadow-4"
@@ -228,22 +228,22 @@
                         </div>
                     </div>
 
-                    <p-fileUpload
-                        name="image[]"
-                        url="./upload.php"
-                        (onSelect)="onUpload($event)"
-                        [multiple]="false"
-                        accept="image/*"
-                        [maxFileSize]="1000000"
+                    <p-dropdown
+                        appendTo="body"
+                        formControlName="imageUrl"
+                        placeholder="Select"
+                        [options]="productImage"
                     >
-                        <ng-template pTemplate="content">
-                            <ul *ngIf="uploadedFiles.length">
-                                <li *ngFor="let file of uploadedFiles">
-                                    {{ file.name }} - {{ file.size }} bytes
-                                </li>
-                            </ul>
-                        </ng-template>
-                    </p-fileUpload>
+                        <ng-template let-prod pTemplate="item">
+                            <div class="flex align-items-center">
+                                <img
+                                    [src]="prod.src"
+                                    style="width: 41px; height: auto"
+                                />
+                                <span class="ml-2">{{ prod.label }}</span>
+                            </div>
+                        </ng-template></p-dropdown
+                    >
                 </ng-template>
 
                 <ng-template pTemplate="footer">

@@ -29,7 +29,7 @@ export class ProductComponent implements OnInit {
     products: Product[] = [];
 
     product: Product = {};
-
+    productImage: any[] = [];
     selectedProducts: Product[] = [];
     Apiproducts: Product[] = [];
 
@@ -48,6 +48,33 @@ export class ProductComponent implements OnInit {
         private fb: UntypedFormBuilder
     ) {
         this.buildForm();
+        this.productImage = [
+            {
+                label: 'Fritas',
+                value: 'assets/my-box/Fritas.jpg',
+                src: 'assets/my-box/Fritas.jpg',
+            },
+            {
+                label: 'Batata',
+                value: 'assets/my-box/Batata.jpg',
+                src: 'assets/my-box/Batata.jpg',
+            },
+            {
+                label: 'KingBox',
+                value: 'assets/my-box/KingBox.jpg',
+                src: 'assets/my-box/KingBox.jpg',
+            },
+            {
+                label: 'MyBox',
+                value: 'assets/my-box/MyBox.jpg',
+                src: 'assets/my-box/MyBox.jpg',
+            },
+            {
+                label: 'myBox2',
+                value: 'assets/my-box/myBox2.jpg',
+                src: 'assets/my-box/myBox2.jpg',
+            },
+        ];
     }
     async ngOnInit() {
         this.products = await lastValueFrom(this.productService.get());
@@ -79,7 +106,7 @@ export class ProductComponent implements OnInit {
             image: [''],
             categoryId: [null, Validators.required],
             status: [],
-            imageBase64: [],
+            imageUrl: [],
             order: [],
         });
     }

@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 })
 export class MyOrdersComponent implements OnInit {
     analyseOrder: boolean = false;
-    orderlist: MyOrder[];
+    orderlist: MyOrder[] = null;
     currentOrder: MyOrder;
     ref: DynamicDialogRef | undefined;
 
@@ -39,7 +39,7 @@ export class MyOrdersComponent implements OnInit {
         return +order.id;
     }
     getOrderByStatus(statusid: number): MyOrder[] {
-        if (this.orderlist === undefined) return [];
+        if (this.orderlist === null || this.orderlist === undefined) return [];
         return this.orderlist.filter((x) => x.status === statusid);
     }
     getProduction(statusid: number): MyOrder[] {

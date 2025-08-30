@@ -19,8 +19,8 @@
                         <app-card-order [order]="order"></app-card-order>
                     </div>
                 </div>
-                <div class="content" *ngIf="!orderlist">
-                    <p>Nenhum pedido no momento.</p>
+                <div class="content" *ngIf="getOrderByStatus(0).length == 0">
+                    <p>Nenhum pedido no momento....</p>
                     <p>Receba pedidos e visualize os que estão em produção.</p>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         <app-card-order [order]="order"></app-card-order>
                     </div>
                 </div>
-                <div class="content" *ngIf="!orderlist">
+                <div class="content" *ngIf="getOrderByStatus(1).length == 0">
                     <p>Nenhum pedido no momento.</p>
                     <p>Receba pedidos e visualize os que estão em produção.</p>
                 </div>
