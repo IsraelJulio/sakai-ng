@@ -1,16 +1,13 @@
-<div class="card mb-3">
-    <div>
-        <h2>{{ product.name }}</h2>
-        <img
-            [src]="product.imageBase64"
-            [alt]="product.image"
-            width="150"
-            class="mt-0 mx-auto mb-5 block shadow-2"
-            *ngIf="product.image"
-        />
-        <h4>{{ product.price | currency : "BRL" }}</h4>
-        <p>{{ product.description }}</p>
-    </div>
+<div>
+    <img
+        [src]="product.imageUrl"
+        [alt]="product.image"
+        width="250"
+        class="mt-0 mx-auto mb-5 block shadow-2"
+        *ngIf="product.imageUrl"
+    />
+    <h4>{{ product.price | currency : "BRL" }}</h4>
+    <p>{{ product.description }}</p>
 </div>
 
 <div

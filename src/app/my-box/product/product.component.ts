@@ -74,6 +74,26 @@ export class ProductComponent implements OnInit {
                 value: 'assets/my-box/myBox2.jpg',
                 src: 'assets/my-box/myBox2.jpg',
             },
+            {
+                label: 'myBox3',
+                value: 'assets/my-box/myBox3.jpg',
+                src: 'assets/my-box/myBox3.jpg',
+            },
+            {
+                label: 'coca',
+                value: 'assets/my-box/coca.jpg',
+                src: 'assets/my-box/coca.jpg',
+            },
+            {
+                label: 'molho',
+                value: 'assets/my-box/molho.jpg',
+                src: 'assets/my-box/molho.jpg',
+            },
+            {
+                label: 'visita',
+                value: 'assets/my-box/visita.jpg',
+                src: 'assets/my-box/visita.jpg',
+            },
         ];
     }
     async ngOnInit() {

@@ -117,7 +117,7 @@ export class ItemsComponent implements OnInit {
         console.log(product);
         console.log(product.quantity);
         this.ref = this.dialogService.open(ItemsDetailComponent, {
-            header: 'Adicionar Item',
+            header: product.name,
             width: '50vw',
             contentStyle: { overflow: 'auto' },
             breakpoints: {

@@ -13,6 +13,7 @@ export class Product {
     rating?: number;
     isAdctive?: boolean;
     imageBase64?: string;
+    imageUrl?: string;
     order?: number;
     constructor() {}
 }
